@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
-namespace WetherProcessor.ProgramSettings
+namespace WeatherProcessor.ProgramSettings
 {
     /// <summary>
     /// Пути к директориям

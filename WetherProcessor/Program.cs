@@ -1,4 +1,4 @@
-using WetherProcessor.ProgramSettings;
+using WeatherProcessor.ProgramSettings;
 
 var builder = WebApplication.CreateBuilder(args);
 

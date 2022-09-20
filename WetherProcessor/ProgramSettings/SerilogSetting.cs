@@ -1,7 +1,7 @@
 using Serilog;
 using Serilog.Events;
 
-namespace WetherProcessor.ProgramSettings
+namespace WeatherProcessor.ProgramSettings
 {
     /// <summary>
     /// Настройки Serilog
