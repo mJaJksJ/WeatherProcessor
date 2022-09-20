@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace WeatherProcessor.Controllers
 {
     /// <summary>
-    /// Контроллер страницы згрузки архивов погоды
+    /// Контроллер страницы загрузки архивов погоды
     /// </summary>
     public class UploadController : Controller
     {
