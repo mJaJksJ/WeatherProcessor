@@ -1,5 +1,8 @@
+using WetherProcessor.ProgramSettings;
+
 var builder = WebApplication.CreateBuilder(args);
 
+builder.SetSerilog();
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
