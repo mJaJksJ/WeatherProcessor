@@ -11,7 +11,7 @@ namespace WeatherProcessor.ProgramSettings
         /// <summary>
         /// Имя вайла лога
         /// </summary>
-        public static string FileLogName => "WetherProcessor.log";
+        public static string FileLogName => "WeatherProcessor.log";
 
         /// <summary>
         /// Настроить Serilog

@@ -1,4 +1,4 @@
-﻿{
+{
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
@@ -8,7 +8,7 @@
     }
   },
   "profiles": {
-    "WetherProcessor": {
+    "WeatherProcessor": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
