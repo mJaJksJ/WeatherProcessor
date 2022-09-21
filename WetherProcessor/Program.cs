@@ -4,6 +4,7 @@ using WeatherProcessor.ProgramSettings;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Configuration.AddJsonFile("appsettings.local.json");
 builder.SetSerilog();
 builder.Services.AddControllersWithViews();
 builder.Services
