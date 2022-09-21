@@ -3,7 +3,7 @@ namespace WeatherProcessor.Database.Entities.Enums
     /// <summary>
     /// Погодные явления
     /// </summary>
-    public enum WeatherTypes
+    public enum WeatherType
     {
         /// <summary>
         /// Дымка

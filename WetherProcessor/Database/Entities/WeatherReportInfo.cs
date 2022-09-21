@@ -43,7 +43,7 @@ namespace WeatherProcessor.Database.Entities
         /// <summary>
         /// Точка росы
         /// </summary>
-        public int Dewpoint { get; set; }
+        public int DewPoint { get; set; }
 
         /// <summary>
         /// Давление мм.р.т.
@@ -83,7 +83,7 @@ namespace WeatherProcessor.Database.Entities
         /// <summary>
         /// Погодные явления
         /// </summary>
-        public WeatherTypes WeatherTypes { get; set; }
+        public WeatherType WeatherType { get; set; }
 
         /// <summary>
         /// Настройки

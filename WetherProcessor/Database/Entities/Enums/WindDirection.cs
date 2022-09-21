@@ -43,6 +43,6 @@ namespace WeatherProcessor.Database.Entities.Enums
         /// <summary>
         /// Северо запад
         /// </summary>
-        NorthWest
+        NorthWest,
     }
 }

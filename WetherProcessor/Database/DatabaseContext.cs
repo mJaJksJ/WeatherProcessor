@@ -32,7 +32,7 @@ namespace WeatherProcessor.Database
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             NpgsqlConnection.GlobalTypeMapper.MapEnum<Month>();
-            NpgsqlConnection.GlobalTypeMapper.MapEnum<WeatherTypes>();
+            NpgsqlConnection.GlobalTypeMapper.MapEnum<WeatherType>();
             NpgsqlConnection.GlobalTypeMapper.MapEnum<WindDirection>();
         }
 
@@ -40,7 +40,7 @@ namespace WeatherProcessor.Database
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasPostgresEnum<Month>();
-            modelBuilder.HasPostgresEnum<WeatherTypes>();
+            modelBuilder.HasPostgresEnum<WeatherType>();
             modelBuilder.HasPostgresEnum<WindDirection>();
 
             var mapper = new NpgsqlSnakeCaseNameTranslator();
