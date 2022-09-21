@@ -32,18 +32,18 @@ namespace WeatherProcessor.Database.Entities
         /// <summary>
         /// Температура °C
         /// </summary>
-        public int Temperature { get; set; }
+        public double Temperature { get; set; }
 
         /// <summary>
         /// Влажность %
         /// </summary>
         [Range(0, 100)]
-        public int Humidity { get; set; }
+        public double Humidity { get; set; }
 
         /// <summary>
         /// Точка росы
         /// </summary>
-        public int DewPoint { get; set; }
+        public double DewPoint { get; set; }
 
         /// <summary>
         /// Давление мм.р.т.
@@ -54,7 +54,7 @@ namespace WeatherProcessor.Database.Entities
         /// <summary>
         /// Направление ветра
         /// </summary>
-        public WindDirection WindDirection { get; set; }
+        public WindDirection[] WindDirections { get; set; }
 
         /// <summary>
         /// Скорость ветра
@@ -78,7 +78,7 @@ namespace WeatherProcessor.Database.Entities
         /// Горизонтальная видимость
         /// </summary>
         [Range(0, int.MaxValue)]
-        public int HorizontalVisibility { get; set; }
+        public double HorizontalVisibility { get; set; }
 
         /// <summary>
         /// Погодные явления

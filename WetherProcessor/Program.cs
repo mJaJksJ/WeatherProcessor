@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Npgsql;
 using WeatherProcessor.Database;
 using WeatherProcessor.ProgramSettings;
+using WeatherProcessor.Services.ExcelFileService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,8 @@ builder.Services
     .AddEntityFrameworkNpgsql()
     .AddDbContext<DatabaseContext>(db => db
         .UseNpgsql(builder.Configuration.GetConnectionString("Postgres")));
+
+builder.Services.AddScoped<IExcelFileService, ExcelFileService>();
 
 var app = builder.Build();
 

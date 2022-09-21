@@ -21,8 +21,10 @@ namespace WeatherProcessor.Database.Entities.Enums
                 "ЮВ" => WindDirection.SouthEast,
                 "Ю" => WindDirection.South,
                 "ЮЗ" => WindDirection.SouthWest,
-                "З" => WindDirection.SouthWest,
+                "З" => WindDirection.West,
                 "СЗ" => WindDirection.NorthWest,
+                "штиль" => WindDirection.Calm,
+                "" => WindDirection.Calm,
                 _ => null
             };
 

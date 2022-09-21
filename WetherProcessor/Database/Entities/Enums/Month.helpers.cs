@@ -38,7 +38,7 @@ namespace WeatherProcessor.Database.Entities.Enums
         /// <returns></returns>
         public static IEnumerable<Month> GetEnumerator()
         {
-            for (var i = 0; i <= 12; i++)
+            for (var i = 0; i < 12; i++)
             {
                 yield return (Month)i;
             }

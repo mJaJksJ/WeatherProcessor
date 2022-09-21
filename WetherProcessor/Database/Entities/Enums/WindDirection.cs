@@ -44,5 +44,10 @@ namespace WeatherProcessor.Database.Entities.Enums
         /// Северо запад
         /// </summary>
         NorthWest,
+
+        /// <summary>
+        /// Штиль
+        /// </summary>
+        Calm
     }
 }

@@ -10,6 +10,7 @@ namespace WeatherProcessor.Services.ExcelFileService
         /// <i>Прим.: проверка на эксель-файл встроена в метод</i>
         /// </summary>
         /// <param name="file">Файл</param>
+        /// <exception cref="InvalidEnumArgumentException">Если не реализовано для данного элемента month</exception>
         /// <returns>Список ошибок</returns>
         IEnumerable<string> UploadToDb(IFormFile file);
 

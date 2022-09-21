@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
@@ -61,13 +62,25 @@ namespace WeatherProcessor.Services.ExcelFileService
             var e = int.TryParse(file.FileName.Split(new[] { '_', '.' }, StringSplitOptions.RemoveEmptyEntries)[^2], out var year);
             if (!e)
             {
-                return new[] { $"Invalid file name {file.FileName}" };
+                var errMsg = $"Invalid file name {file.FileName}";
+                Log.Error(errMsg);
+                return new[] { errMsg };
             }
 
             var weatherReports = new List<WeatherReport>();
             foreach (var month in Months.GetEnumerator())
             {
-                var sheetName = $"{month.RussianName()} {year}";
+                string sheetName;
+                try
+                {
+                    sheetName = $"{month.RussianName()} {year}";
+                }
+                catch (InvalidEnumArgumentException exception)
+                {
+                    Log.Error(exception.Message, exception);
+                    return new[] { exception.Message };
+                }
+
                 var sheet = InitSheet(file, sheetName);
 
                 var weatherReport = new WeatherReport
@@ -93,13 +106,14 @@ namespace WeatherProcessor.Services.ExcelFileService
                 }
             }
 
-            if (!_errors.Any())
+            if (_errors.Any())
             {
-                _context.Add(weatherReports);
-                return Array.Empty<string>();
+                return _errors;
             }
 
-            return _errors;
+            _context.AddRange(weatherReports);
+            _context.SaveChanges();
+            return Array.Empty<string>();
         }
 
         /// <inheritdoc/>
@@ -128,77 +142,94 @@ namespace WeatherProcessor.Services.ExcelFileService
 
             var data = $"{row.GetCell(DateIdx)} {row.GetCell(TimeIdx)}";
             var e = DateTime.TryParse(data, out var dateTime);
-            if (e)
+            if (!e)
             {
                 AddError(data, "DateTime");
             }
 
-            data = row.GetCell(TemperatureIdx).ToString();
-            e = int.TryParse(data, out var temperature);
-            if (e)
+            data = row.GetCell(TemperatureIdx)?.ToString();
+            data = string.IsNullOrWhiteSpace(data) ? "0" : data;
+            e = double.TryParse(data, out var temperature);
+            if (!e)
             {
                 AddError(data, "Temperature");
             }
 
-            data = row.GetCell(HumidityIdx).ToString();
-            e = int.TryParse(data, out var humidity);
-            if (e)
+            data = row.GetCell(HumidityIdx)?.ToString();
+            data = string.IsNullOrWhiteSpace(data) ? "0" : data;
+            e = double.TryParse(data, out var humidity);
+            if (!e)
             {
                 AddError(data, "Humidity");
             }
 
-            data = row.GetCell(DewpointIdx).ToString();
-            e = int.TryParse(data, out var dewPoint);
-            if (e)
+            data = row.GetCell(DewpointIdx)?.ToString();
+            data = string.IsNullOrWhiteSpace(data) ? "0" : data;
+            e = double.TryParse(data, out var dewPoint);
+            if (!e)
             {
                 AddError(data, "DewPoint");
             }
 
-            data = row.GetCell(PressureIdx).ToString();
+            data = row.GetCell(PressureIdx)?.ToString();
+            data = string.IsNullOrWhiteSpace(data) ? "0" : data;
             e = int.TryParse(data, out var pressure);
-            if (e)
+            if (!e)
             {
                 AddError(data, "Pressure");
             }
 
-            data = row.GetCell(WindDirectionIdx).ToString();
-            e = WindDirections.TryParse(data, out var windDirection);
-            if (e)
+            var wds = row.GetCell(WindDirectionIdx)?.ToString().Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            var windDirections = new List<WindDirection>();
+            foreach (var wd in wds)
             {
-                AddError(data, "WindDirection");
+                e = WindDirections.TryParse(string.IsNullOrWhiteSpace(wd) ? "" : wd, out var windDirection);
+                if (!e)
+                {
+                    AddError(wd, "WindDirection");
+                }
+                else
+                {
+                    windDirections.Add(windDirection ?? default);
+                }
             }
 
-            data = row.GetCell(WindSpeedIdx).ToString();
+            data = row.GetCell(WindSpeedIdx)?.ToString();
+            data = string.IsNullOrWhiteSpace(data) ? "0" : data;
             e = int.TryParse(data, out var windSpeed);
-            if (e)
+            if (!e)
             {
                 AddError(data, "WindSpeed");
             }
 
-            data = row.GetCell(CloudCoverIdx).ToString();
+            data = row.GetCell(CloudCoverIdx)?.ToString();
+            data = string.IsNullOrWhiteSpace(data) ? "0" : data;
             e = int.TryParse(data, out var cloudCover);
-            if (e)
+            if (!e)
             {
                 AddError(data, "CloudCover");
             }
 
-            data = row.GetCell(CloudLowerLimitIdx).ToString();
+            data = row.GetCell(CloudLowerLimitIdx)?.ToString();
+            data = string.IsNullOrWhiteSpace(data) ? "0" : data;
             e = int.TryParse(data, out var cloudLowerLimit);
-            if (e)
+            if (!e)
             {
                 AddError(data, "CloudLowerLimit");
             }
 
-            data = row.GetCell(HorizontalVisibilityIdx).ToString();
-            e = int.TryParse(data, out var horizontalVisibility);
-            if (e)
+            data = row.GetCell(HorizontalVisibilityIdx)?.ToString();
+            data = string.IsNullOrWhiteSpace(data) ? "0" : data == "менее 100 м" ? "-100" : data;
+            e = double.TryParse(data, out var horizontalVisibility);
+            if (!e)
             {
                 AddError(data, "HorizontalVisibility");
             }
 
-            data = row.GetCell(WeatherTypesIdx).ToString();
+            data = row.GetCell(WeatherTypesIdx)?.ToString();
+            data = string.IsNullOrWhiteSpace(data) ? "" : data;
             e = WeatherTypes.TryParse(data, out var weatherType);
-            if (e)
+            if (!e)
             {
                 AddError(data, "WeatherTypes");
             }
@@ -213,7 +244,7 @@ namespace WeatherProcessor.Services.ExcelFileService
                     Humidity = humidity,
                     DewPoint = dewPoint,
                     Pressure = pressure,
-                    WindDirection = windDirection ?? default,
+                    WindDirections = windDirections.ToArray(),
                     WindSpeed = windSpeed,
                     CloudCover = cloudCover,
                     CloudLowerLimit = cloudLowerLimit,
