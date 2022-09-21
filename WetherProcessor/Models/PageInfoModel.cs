@@ -33,7 +33,7 @@ namespace WeatherProcessor.Models
         /// <summary>
         /// Количество элементов на странице
         /// </summary>
-        public static int PageSize => 10;
+        public int PageSize { get; set; }
 
         /// <summary>
         /// Количество элементов всего

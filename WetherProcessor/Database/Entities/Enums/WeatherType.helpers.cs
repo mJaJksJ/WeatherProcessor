@@ -72,5 +72,70 @@ namespace WeatherProcessor.Database.Entities.Enums
 
             return result is not null;
         }
+
+        /// <summary>
+        /// Получить русское название
+        /// </summary>
+        /// <param name="weatherType">Погодное явление</param>
+        /// <exception cref="InvalidEnumArgumentException">Если не реализовано для данного элемента month</exception>
+        public static string RussianName(this WeatherType weatherType)
+        {
+            var result = weatherType switch
+            {
+                WeatherType.Hase => "Дымка",
+                WeatherType.ContinuousLightSnow => "Непрерывный слабый снег",
+                WeatherType.Snow => "Снег",
+                WeatherType.IceNeedles => "Ледяные иглы",
+                WeatherType.RainfallWithSnow => "Ливневый снег (ливневый дождь со снегом)",
+                WeatherType.ContinuousMediumSnow => "Непрерывный умеренный снег",
+                WeatherType.LightRainfallSnow => "Слабый ливневый снег",
+                WeatherType.LightSnowWithBreaks => "Слабый снег с перерывами",
+                WeatherType.UnchangedState => "Состояние неба в целом не изменилось",
+                WeatherType.CloudLess => "Облака в целом рассеивались или становились менее развитыми",
+                WeatherType.LightPozemok => "Слабый позёмок",
+                WeatherType.CloudForming => "Облака образовались или в целом развивались",
+                WeatherType.Rain => "Дождь",
+                WeatherType.Rainfall => "Ливневый дождь",
+                WeatherType.ContinuousLightRain => "Непрерывный слабый дождь",
+                WeatherType.RemoteThunderstorm => "Отдаленная гроза",
+                WeatherType.LightDrizzleWithIce => "Слабая морось, образующая гололед",
+                WeatherType.ContinuousHeavySnow => "Непрерывный сильный снег",
+                WeatherType.DrizzleWithSnow => "Слабый дождь/морось со снегом",
+                WeatherType.LightRainfall => "Слабый ливневый дождь",
+                WeatherType.Thunderstorm => "Гроза",
+                WeatherType.ThunderWithFallout => "Гроза с осадками",
+                WeatherType.ContinuousMediumRain => "Непрерывный умеренный дождь",
+                WeatherType.LightRainWithIce => "Слабый дождь, образующий гололед",
+                WeatherType.RainfallSnow => "Ливневый снег",
+                WeatherType.Hail => "Град (ледяная крупа)",
+                WeatherType.LightRainWithBreaks => "Слабый дождь с перерывами",
+                WeatherType.ContinuousLightDrizzle => "Непрерывная слабая морось",
+                WeatherType.FogFormingWithoutSky => "Туман начался/усиливался в последний час (неба не видно)",
+                WeatherType.IceRain => "Ледяной дождь",
+                WeatherType.DrizzleWithIce => "Морось (дождь) с образованием гололеда",
+                WeatherType.MediumRainWithBreaks => "Умеренный дождь с перерывами",
+                WeatherType.IndividualSnowCrystals => "Отдельные снежные кристаллы",
+                WeatherType.LightIceSnowGrains => "Слабая ледяная/снежная крупа",
+                WeatherType.LightRainfallWithSnow => "Слабый ливневый дождь со снегом",
+                WeatherType.LightRainWithThunderstorm => "Слабый дождь (гроза в течение последнего часа)",
+                WeatherType.ForFormingWithSky => "Туман начался/усиливался в последний час (небо видно)",
+                WeatherType.ContinuousHeavyRain => "Непрерывный сильный дождь",
+                WeatherType.Drizzle => "Морось",
+                WeatherType.SnowGrains => "Снежные зерна",
+                WeatherType.LightDrizzleWithRain => "Слабая морось с дождем",
+                WeatherType.FogContinuousWithoutSky => "Туман без изменения интенсивности в последний час (неба не видно)",
+                WeatherType.RainWithThinderstorm => "Дождь (гроза в течение последнего часа)",
+                WeatherType.VeryHeavyRainfall => "Очень сильный ливневый дождь",
+                WeatherType.IceGrains => "Ледяная крупа",
+                WeatherType.ContinuousMediumDrizzle => "Непрерывная умеренная морось",
+                WeatherType.Fog => "Туман",
+                WeatherType.FogContinuousWithSky => "Туман без изменения интенсивности в последний час (небо видно)",
+                WeatherType.HeavySnowWithBreaks => "Сильный снег с перерывами",
+                WeatherType.HeavyRainDrizzleWithShow => "Сильный дождь/морось со снегом",
+                WeatherType.None => "",
+            };
+
+            return result;
+        }
     }
 }

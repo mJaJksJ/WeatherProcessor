@@ -1,3 +1,4 @@
+@using WeatherProcessor.Database.Entities.Enums
 @model ShowWeatherModel
 
 <i><a class="text-decoration-none" asp-area="" asp-controller="MainPage" asp-action="Index">Вернуться на главную</a></i>
@@ -45,6 +46,12 @@
                 <option value="-1">Не выбрано</option>
             }
         </select>
+        <select name="pageSize">
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+        </select>
         <p><input type="submit" value="Применить фильтры" /></p>
     </form>
 
@@ -83,24 +90,24 @@
                     <td>@w.CloudCover</td>
                     <td>@w.CloudLowerLimit</td>
                     <td>@w.HorizontalVisibility</td>
-                    <td>@w.WeatherType</td>
+                    <td>@w.WeatherType.RussianName()</td>
                 </tr>
             }
             </tbody>
             <tfoot class="btn-group">
             @if (Model?.PageInfo is not null)
             {
-                <a class="btn btn-default" asp-area="" asp-controller="ShowWeather" asp-action="Index" asp-route-pageNumber=@Model.PageInfo.First asp-route-year=@Model.Year asp-route-month=@Model.Month>&#706;&#706;</a>
+                <a class="btn btn-default" asp-area="" asp-controller="ShowWeather" asp-action="Index" asp-route-pageNumber=@Model.PageInfo.First asp-route-year=@Model.Year asp-route-month=@Model.Month asp-route-pageNumber=@Model.PageInfo.PageSize>&#706;&#706;</a>
                 if (@Model.PageInfo.Prev >= @Model.PageInfo.First && @Model.PageInfo.Prev != @Model.PageInfo.PageNumber)
                 {
-                    <a class="btn btn-default" asp-area="" asp-controller="ShowWeather" asp-action="Index" asp-route-pageNumber=@Model.PageInfo.Prev asp-route-year=@Model.Year asp-route-month=@Model.Month>@Model.PageInfo.Prev</a>
+                    <a class="btn btn-default" asp-area="" asp-controller="ShowWeather" asp-action="Index" asp-route-pageNumber=@Model.PageInfo.Prev asp-route-year=@Model.Year asp-route-month=@Model.Month asp-route-pageNumber=@Model.PageInfo.PageSize>@Model.PageInfo.Prev</a>
                 }
-                <a class="btn btn-default selected btn-primary" asp-area="" asp-controller="ShowWeather" asp-action="Index" asp-route-pageNumber=@Model.PageInfo.PageNumber asp-route-year=@Model.Year asp-route-month=@Model.Month>@Model.PageInfo.PageNumber</a>
+                <a class="btn btn-default selected btn-primary" asp-area="" asp-controller="ShowWeather" asp-action="Index" asp-route-pageNumber=@Model.PageInfo.PageNumber asp-route-year=@Model.Year asp-route-month=@Model.Month asp-route-pageNumber=@Model.PageInfo.PageSize>@Model.PageInfo.PageNumber</a>
                 if (@Model.PageInfo.Next <= @Model.PageInfo.Last && @Model.PageInfo.Next != @Model.PageInfo.PageNumber)
                 {
-                    <a class="btn btn-default" asp-area="" asp-controller="ShowWeather" asp-action="Index" asp-route-pageNumber=@Model.PageInfo.Next asp-route-year=@Model.Year asp-route-month=@Model.Month>@Model.PageInfo.Next</a>
+                    <a class="btn btn-default" asp-area="" asp-controller="ShowWeather" asp-action="Index" asp-route-pageNumber=@Model.PageInfo.Next asp-route-year=@Model.Year asp-route-month=@Model.Month asp-route-pageNumber=@Model.PageInfo.PageSize>@Model.PageInfo.Next</a>
                 }
-                <a class="btn btn-default" asp-area="" asp-controller="ShowWeather" asp-action="Index" asp-route-pageNumber=@Model.PageInfo.Last asp-route-year=@Model.Year asp-route-month=@Model.Month>&#707;&#707;</a>
+                <a class="btn btn-default" asp-area="" asp-controller="ShowWeather" asp-action="Index" asp-route-pageNumber=@Model.PageInfo.Last asp-route-year=@Model.Year asp-route-month=@Model.Month asp-route-pageNumber=@Model.PageInfo.PageSize>&#707;&#707;</a>
             }
 
             <!--@for (var i = 0; i <= (Model?.PageInfo?.TotalPages ?? 0); i++)

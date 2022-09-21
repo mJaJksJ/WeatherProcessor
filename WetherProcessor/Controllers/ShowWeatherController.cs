@@ -22,19 +22,20 @@ namespace WeatherProcessor.Controllers
         /// <summary>
         /// Страница
         /// </summary>
-        public IActionResult Index(int year = -1, string month = "-1", int pageNumber = 0)
+        public IActionResult Index(int year = -1, string month = "-1", int pageNumber = 0, int pageSize = 10)
         {
             var weathers = _showWeatherService.GetWeathers(year, month);
             var result = new ShowWeatherModel
             {
                 Weathers = weathers
-                    .Skip(PageInfoModel.PageSize * pageNumber)
-                    .Take(PageInfoModel.PageSize),
+                    .Skip(pageSize * pageNumber)
+                    .Take(pageSize),
                 PageInfo = new PageInfoModel
                 {
                     TotalItems = weathers.Count(),
                     PageNumber = pageNumber,
-                    TotalPages = (int)Math.Ceiling((decimal)weathers.Count() / PageInfoModel.PageSize) - 1
+                    PageSize = pageSize,
+                    TotalPages = (int)Math.Ceiling((decimal)weathers.Count() / pageSize) - 1
                 },
                 YearsFilter = _showWeatherService.GetYears(),
                 MonthsFilter = _showWeatherService.GetMonths(),
