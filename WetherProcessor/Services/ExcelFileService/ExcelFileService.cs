@@ -70,6 +70,12 @@ namespace WeatherProcessor.Services.ExcelFileService
             var weatherReports = new List<WeatherReport>();
             foreach (var month in Months.GetEnumerator())
             {
+                if (_context.WeatherReports.Any(_ => _.Year == year && _.Month == month))
+                {
+                    _errors.Add($"{month.RussianName()} {year} уже есть в базе");
+                    break;
+                }
+
                 string sheetName;
                 try
                 {
