@@ -53,7 +53,8 @@ namespace WeatherProcessor.Services.ShowWeatherService
                     WeatherType = w.WeatherType,
                 }))
                 .AsEnumerable()
-                .Aggregate(weathers, (current, w) => current.Union(w));
+                .Aggregate(weathers, (current, w) => current.Union(w))
+                .OrderBy(_ => _.DateTime);
 
             return result;
         }
@@ -61,7 +62,7 @@ namespace WeatherProcessor.Services.ShowWeatherService
         /// <inheritdoc/>
         public IEnumerable<int> GetYears()
         {
-            return _context.WeatherReports.Select(_ => _.Year).Distinct().AsEnumerable();
+            return _context.WeatherReports.Select(_ => _.Year).Distinct().OrderBy(_ => _);
         }
 
         /// <inheritdoc/>
