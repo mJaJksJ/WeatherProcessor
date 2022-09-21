@@ -30,24 +30,36 @@ namespace WeatherProcessor.Controllers
         /// <summary>
         /// Получение файла
         /// </summary>
-        /// <param name="file">Загружаемый файл</param>
+        /// <param name="files">Загружаемый файл</param>
         [HttpPost]
-        public IActionResult Index(IFormFile file)
+        public IActionResult Index(IFormFileCollection files)
         {
-            IEnumerable<string> errors;
-            try
+            foreach (var file in files)
             {
-                errors = _excelFileService.UploadToDb(file);
-            }
-            catch (Exception e)
-            {
-                errors = new List<string>() { e.Message };
+                IEnumerable<string> errors;
+                try
+                {
+                    errors = _excelFileService.UploadToDb(file);
+                }
+                catch (Exception e)
+                {
+                    errors = new List<string>() { e.Message };
+                }
+
+                if (errors.Any())
+                {
+                    return View(new UploadModel
+                    {
+                        FileName = file?.FileName,
+                        Errors = errors
+                    });
+                }
             }
 
             return View(new UploadModel
             {
-                FileName = file?.FileName,
-                Errors = errors
+                FileName = string.Join(", ", files.Select(_ => _.FileName)),
+                Errors = Array.Empty<string>()
             });
         }
     }
