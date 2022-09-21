@@ -29,6 +29,14 @@ namespace WeatherProcessor.Database
         }
 
         /// <inheritdoc/>
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            NpgsqlConnection.GlobalTypeMapper.MapEnum<Month>();
+            NpgsqlConnection.GlobalTypeMapper.MapEnum<WeatherTypes>();
+            NpgsqlConnection.GlobalTypeMapper.MapEnum<WindDirection>();
+        }
+
+        /// <inheritdoc/>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasPostgresEnum<Month>();
