@@ -35,7 +35,7 @@ namespace WeatherProcessor.Models
         /// <summary>
         /// Направление ветра
         /// </summary>
-        public WindDirection[] WindDirections { get; set; }
+        public IEnumerable<string> WindDirections { get; set; }
 
         /// <summary>
         /// Скорость ветра

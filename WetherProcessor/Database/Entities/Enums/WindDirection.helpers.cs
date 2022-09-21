@@ -1,3 +1,5 @@
+using System.ComponentModel;
+
 namespace WeatherProcessor.Database.Entities.Enums
 {
     /// <summary>
@@ -29,6 +31,28 @@ namespace WeatherProcessor.Database.Entities.Enums
             };
 
             return result is not null;
+        }
+
+        /// <summary>
+        /// Получить русское название
+        /// </summary>
+        /// <param name="windDirection">Направление ветра</param>
+        /// <exception cref="InvalidEnumArgumentException">Если не реализовано для данного элемента month</exception>
+        public static string RussianName(this WindDirection windDirection)
+        {
+            return windDirection switch
+            {
+                WindDirection.North => "С",
+                WindDirection.NorthEast => "СВ",
+                WindDirection.East => "В",
+                WindDirection.SouthEast => "ЮВ",
+                WindDirection.South => "Ю",
+                WindDirection.SouthWest => "ЮЗ",
+                WindDirection.West => "З",
+                WindDirection.NorthWest => "СЗ",
+                WindDirection.Calm => "штиль",
+                _ => throw new InvalidEnumArgumentException(windDirection.ToString()),
+            };
         }
     }
 }

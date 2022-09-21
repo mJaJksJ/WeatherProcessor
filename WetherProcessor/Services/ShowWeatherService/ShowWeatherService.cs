@@ -45,7 +45,7 @@ namespace WeatherProcessor.Services.ShowWeatherService
                     Humidity = w.Humidity,
                     DewPoint = w.DewPoint,
                     Pressure = w.Pressure,
-                    WindDirections = w.WindDirections,
+                    WindDirections = w.WindDirections.Select(_ => _.RussianName()),
                     WindSpeed = w.WindSpeed,
                     CloudCover = w.CloudCover,
                     CloudLowerLimit = w.CloudLowerLimit,
