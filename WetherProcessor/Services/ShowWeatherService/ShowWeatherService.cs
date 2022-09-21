@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using WeatherProcessor.Database;
+using WeatherProcessor.Database.Entities.Enums;
 using WeatherProcessor.Models;
 
 namespace WeatherProcessor.Services.ShowWeatherService
@@ -19,11 +20,24 @@ namespace WeatherProcessor.Services.ShowWeatherService
         }
 
         /// <inheritdoc/>
-        public IEnumerable<WeatherModel> GetWeathers(IEnumerable<int> years, IEnumerable<string> months)
+        public IEnumerable<WeatherModel> GetWeathers(int year, string month)
         {
             IEnumerable<WeatherModel> weathers = new List<WeatherModel>();
-            var result = _context.WeatherReports
+            var query = _context.WeatherReports
                 .Include(_ => _.WeatherReportInfo)
+                .ToArray();
+
+            if (year != -1)
+            {
+                query = query.Where(_ => _.Year == year).ToArray();
+            }
+
+            if (month != "-1")
+            {
+                query = query.Where(_ => _.Month.RussianName() == month).ToArray();
+            }
+
+            var result = query
                 .Select(_ => _.WeatherReportInfo.Select(w => new WeatherModel
                 {
                     DateTime = w.DateTime,
@@ -42,6 +56,18 @@ namespace WeatherProcessor.Services.ShowWeatherService
                 .Aggregate(weathers, (current, w) => current.Union(w));
 
             return result;
+        }
+
+        /// <inheritdoc/>
+        public IEnumerable<int> GetYears()
+        {
+            return _context.WeatherReports.Select(_ => _.Year).Distinct().AsEnumerable();
+        }
+
+        /// <inheritdoc/>
+        public IEnumerable<string> GetMonths()
+        {
+            return Months.GetEnumerator().Select(_ => _.RussianName());
         }
     }
 }

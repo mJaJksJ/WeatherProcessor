@@ -12,6 +12,16 @@ namespace WeatherProcessor.Services.ShowWeatherService
         /// </summary>
         /// <param name="years">Фильтр по годам</param>
         /// <param name="months">Фильтр по месяцам</param>
-        IEnumerable<WeatherModel> GetWeathers(IEnumerable<int> years, IEnumerable<string> months);
+        IEnumerable<WeatherModel> GetWeathers(int years, string months);
+
+        /// <summary>
+        /// Все возможные года
+        /// </summary>
+        public IEnumerable<int> GetYears();
+
+        /// <summary>
+        /// Все месяцы
+        /// </summary>
+        IEnumerable<string> GetMonths();
     }
 }

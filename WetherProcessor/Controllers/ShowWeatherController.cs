@@ -22,9 +22,9 @@ namespace WeatherProcessor.Controllers
         /// <summary>
         /// Страница
         /// </summary>
-        public IActionResult Index(IEnumerable<int> years, IEnumerable<string> months, int pageNumber = 0)
+        public IActionResult Index(int year = -1, string month = "-1", int pageNumber = 0)
         {
-            var weathers = _showWeatherService.GetWeathers(years, months);
+            var weathers = _showWeatherService.GetWeathers(year, month);
             var result = new ShowWeatherModel
             {
                 Weathers = weathers
@@ -36,8 +36,10 @@ namespace WeatherProcessor.Controllers
                     PageNumber = pageNumber,
                     TotalPages = (int)Math.Ceiling((decimal)weathers.Count() / PageInfoModel.PageSize) - 1
                 },
-                YearsFilter = years,
-                MonthsFilter = months
+                YearsFilter = _showWeatherService.GetYears(),
+                MonthsFilter = _showWeatherService.GetMonths(),
+                Year = year,
+                Month = month
             };
 
             return View(result);

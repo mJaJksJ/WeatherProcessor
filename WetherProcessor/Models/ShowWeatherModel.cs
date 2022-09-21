@@ -21,5 +21,15 @@ namespace WeatherProcessor.Models
         /// Фильтр по месяцам
         /// </summary>
         public IEnumerable<string> MonthsFilter { get; set; }
+
+        /// <summary>
+        /// Выбранный год
+        /// </summary>
+        public int Year { get; set; }
+
+        /// <summary>
+        /// Выбранный месяц
+        /// </summary>
+        public string Month { get; set; }
     }
 }
