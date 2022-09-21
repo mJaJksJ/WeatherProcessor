@@ -3,6 +3,7 @@ using Npgsql;
 using WeatherProcessor.Database;
 using WeatherProcessor.ProgramSettings;
 using WeatherProcessor.Services.ExcelFileService;
+using WeatherProcessor.Services.ShowWeatherService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,7 @@ builder.Services
         .UseNpgsql(builder.Configuration.GetConnectionString("Postgres")));
 
 builder.Services.AddScoped<IExcelFileService, ExcelFileService>();
+builder.Services.AddScoped<IShowWeatherService, ShowWeatherService>();
 
 var app = builder.Build();
 

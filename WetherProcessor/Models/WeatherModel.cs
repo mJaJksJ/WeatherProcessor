@@ -1,29 +1,12 @@
-using System.ComponentModel.DataAnnotations;
-using Microsoft.EntityFrameworkCore;
 using WeatherProcessor.Database.Entities.Enums;
 
-namespace WeatherProcessor.Database.Entities
+namespace WeatherProcessor.Models
 {
     /// <summary>
-    /// Информация о погоде
+    /// Модель записи о погоде
     /// </summary>
-    public class WeatherReportInfo
+    public class WeatherModel
     {
-        /// <summary>
-        /// Id
-        /// </summary>
-        public int Id { get; set; }
-
-        /// <summary>
-        /// Запись о погоде
-        /// </summary>
-        public WeatherReport WeatherReport { get; set; }
-
-        /// <summary>
-        /// Id записи о погоде
-        /// </summary>
-        public int WeatherReportId { get; set; }
-
         /// <summary>
         /// Дата и время записи
         /// </summary>
@@ -37,7 +20,6 @@ namespace WeatherProcessor.Database.Entities
         /// <summary>
         /// Влажность %
         /// </summary>
-        [Range(0, 100)]
         public double Humidity { get; set; }
 
         /// <summary>
@@ -48,7 +30,6 @@ namespace WeatherProcessor.Database.Entities
         /// <summary>
         /// Давление мм.р.т.
         /// </summary>
-        [Range(0, int.MaxValue)]
         public int Pressure { get; set; }
 
         /// <summary>
@@ -57,43 +38,28 @@ namespace WeatherProcessor.Database.Entities
         public WindDirection[] WindDirections { get; set; }
 
         /// <summary>
-        /// Скорость ветра м/с
+        /// Скорость ветра
         /// </summary>
-        [Range(0, int.MaxValue)]
         public int WindSpeed { get; set; }
 
         /// <summary>
-        /// Облачность %
+        /// Облачность
         /// </summary>
-        [Range(0, 100)]
         public int CloudCover { get; set; }
 
         /// <summary>
-        /// Нижняя граница облачности, м
+        /// Нижняя граница облачности
         /// </summary>
-        [Range(0, int.MaxValue)]
         public int CloudLowerLimit { get; set; }
 
         /// <summary>
-        /// Горизонтальная видимость, км
+        /// Горизонтальная видимость
         /// </summary>
-        [Range(0, int.MaxValue)]
         public double HorizontalVisibility { get; set; }
 
         /// <summary>
         /// Погодные явления
         /// </summary>
         public WeatherType WeatherType { get; set; }
-
-        /// <summary>
-        /// Настройки
-        /// </summary>
-        public static void Setup(ModelBuilder modelBuilder)
-        {
-            var entity = modelBuilder.Entity<WeatherReportInfo>();
-
-            entity.ToTable("weather_report_info");
-            entity.HasKey(t => t.Id);
-        }
     }
 }

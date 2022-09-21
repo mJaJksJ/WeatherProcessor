@@ -1,0 +1,74 @@
+@model ShowWeatherModel
+
+<i><a class="text-decoration-none" asp-area="" asp-controller="MainPage" asp-action="Index">Вернуться на главную</a></i>
+<div class="text-center">
+    @if (Model?.Weathers?.Any() ?? false)
+    {
+        <table class="table" style="width: 50vw;">
+            <thead>
+                <tr>
+                    <th>Дата</th>
+                    <th>Время</th>
+                    <th>Температура °C</th>
+                    <th>Влажность %</th>
+                    <th>Точка росы</th>
+                    <th>Давление мм.р.т.</th>
+                    <th>Направление ветра</th>
+                    <th>Скорость ветра м/с</th>
+                    <th>Облачность %</th>
+                    <th>Нижняя граница облачности, м</th>
+                    <th>Горизонтальная видимость, км</th>
+                    <th>Погодные явления</th>
+                </tr>
+
+            </thead>
+            <tbody>
+                @foreach (var w in Model.Weathers)
+                {
+                    <tr>
+                        <td>@w.DateTime.ToString("dd.MM.yyyy")</td>
+                        <td>@w.DateTime.ToString("hh:mm")</td>
+                        <td>@w.Temperature</td>
+                        <td>@w.Humidity</td>
+                        <td>@w.DewPoint</td>
+                        <td>@w.Pressure</td>
+                        <td>string.Join(",", @w.WindDirections)</td>
+                        <td>@w.WindSpeed</td>
+                        <td>@w.CloudCover</td>
+                        <td>@w.CloudLowerLimit</td>
+                        <td>@w.HorizontalVisibility</td>
+                        <td>@w.WeatherType</td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot class="btn-group">
+                @if (Model?.PageInfo is not null)
+                {
+                    <a class="btn btn-default" asp-area="" asp-controller="ShowWeather" asp-action="Index" asp-route-pageNumber=@Model.PageInfo.First>&#706;&#706;</a>
+                    if (@Model.PageInfo.Prev >= @Model.PageInfo.First && @Model.PageInfo.Prev != @Model.PageInfo.PageNumber)
+                    {
+                        <a class="btn btn-default" asp-area="" asp-controller="ShowWeather" asp-action="Index" asp-route-pageNumber=@Model.PageInfo.Prev>@Model.PageInfo.Prev</a>
+                    }
+                    <a class="btn btn-default selected btn-primary" asp-area="" asp-controller="ShowWeather" asp-action="Index" asp-route-pageNumber=@Model.PageInfo.PageNumber>@Model.PageInfo.PageNumber</a>
+                    if (@Model.PageInfo.Next <= @Model.PageInfo.Last && @Model.PageInfo.Next != @Model.PageInfo.PageNumber)
+                    {
+                        <a class="btn btn-default" asp-area="" asp-controller="ShowWeather" asp-action="Index" asp-route-pageNumber=@Model.PageInfo.Next>@Model.PageInfo.Next</a>
+                    }
+                    <a class="btn btn-default" asp-area="" asp-controller="ShowWeather" asp-action="Index" asp-route-pageNumber=@Model.PageInfo.Last>&#707;&#707;</a>
+                }
+
+                <!--@for (var i = 0; i <= (Model?.PageInfo?.TotalPages ?? 0); i++)
+                {
+                    var classStr = Model?.PageInfo?.PageNumber == i ? "btn btn-default selected btn-primary" : "btn btn-default";
+                    var style = Model?.PageInfo?.PageNumber == i ? "background-color: #148F2A" : "";
+                                <a class=@classStr style=@style asp-area="" asp-controller="ShowWeather" asp-action="Index" asp-route-pageNumber=@i>@i</a>
+                }-->
+            </tfoot>
+        </table>
+    }
+    else
+    {
+        <p>Таблица пуста</p>
+        <p><i>Пожалуйста, внесите данные</i></p>
+    }
+</div>
