@@ -15,6 +15,16 @@ namespace WeatherProcessor.Database.Entities
         public int Id { get; set; }
 
         /// <summary>
+        /// Запись о погоде
+        /// </summary>
+        public WeatherReport WeatherReport { get; set; }
+
+        /// <summary>
+        /// Id записи о погоде
+        /// </summary>
+        public int WeatherReportId { get; set; }
+
+        /// <summary>
         /// Дата и время записи
         /// </summary>
         public DateTime DateTime { get; set; }
