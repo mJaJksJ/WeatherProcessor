@@ -34,7 +34,16 @@ namespace WeatherProcessor.Controllers
         [HttpPost]
         public IActionResult Index(IFormFile file)
         {
-            var errors = _excelFileService.UploadToDb(file);
+            IEnumerable<string> errors;
+            try
+            {
+                errors = _excelFileService.UploadToDb(file);
+            }
+            catch (Exception e)
+            {
+                errors = new List<string>() { e.Message };
+            }
+
             return View(new UploadModel
             {
                 FileName = file?.FileName,
