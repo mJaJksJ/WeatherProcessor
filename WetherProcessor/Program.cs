@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
 using WeatherProcessor.Database;
 using WeatherProcessor.ProgramSettings;
 
@@ -18,6 +19,11 @@ using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
     context.Database.Migrate();
+
+    var npgsqlConnection = context.Database.GetDbConnection() as NpgsqlConnection;
+    npgsqlConnection?.Open();
+    npgsqlConnection?.ReloadTypes();
+    npgsqlConnection?.Close();
 }
 
 if (!app.Environment.IsDevelopment())

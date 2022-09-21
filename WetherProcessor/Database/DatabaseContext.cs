@@ -26,6 +26,8 @@ namespace WeatherProcessor.Database
         /// <param name="options"></param>
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
         {
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+            AppContext.SetSwitch("Npgsql.DisableDateTimeInfinityConversions", true);
         }
 
         /// <inheritdoc/>
