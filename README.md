@@ -1,4 +1,4 @@
-# WetherProcessor
+# WeatherProcessor
 
 #### Текст задания:
 
