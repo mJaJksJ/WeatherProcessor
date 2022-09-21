@@ -16,3 +16,11 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.linkhover {
+    color: black;
+}
+
+.linkhover:hover {
+    color: blue;
+}

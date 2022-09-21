@@ -1,0 +1,47 @@
+@model UploadModel
+
+<i><a class="text-decoration-none" asp-area="" asp-controller="MainPage" asp-action="Index">Вернуться на главную</a></i>
+<div class="text-center">
+    <h1 class="display-4">Загрузка Excel файла</h1>
+    <p>
+        <h4>
+            Допустимые форматы:<br />
+        </h4>
+        <i>
+            .xls, .xlsx
+        </i>
+    </p>
+    <div>
+        <h4>Шаблон документа:</h4>
+        <p>
+            <b>Название файла: </b>'filename_yyyy.xls' / 'filename_yyyy.xlsx'<br/><i>yyyy - год</i>
+        </p>
+        <p>
+            <b>Название листов в файле: </b>'Месяц yyyy'<br/><i>yyyy - год</i>
+        </p>
+        Пример правильного документа можно скачать на <a class="text-decoration-none linkhover" asp-area="" asp-controller="MainPage" asp-action="Index">главной странице</a>
+    </div>
+    <br/>
+    <form method="post" enctype="multipart/form-data">
+        <p><input type="file" name="file" /></p>
+        <p><input type="submit" value="Загрузить" /></p>
+    </form>
+    @if (Model is not null)
+    {
+        @if (!Model.Errors.Any())
+        {
+            <p class="bg-success">Файл @Model.FileName зашружен успешно</p>
+        }
+        else
+        {
+            <p class="bg-danger">
+                Файл @Model.FileName не загружен <br/>
+                <b>Ошибки:</b><br/>
+                @foreach (var error in Model.Errors)
+                {
+                    <span>@error</span><br/>
+                }
+            </p>
+        }
+    }
+</div>
