@@ -1,3 +1,5 @@
+using System.ComponentModel;
+
 namespace WeatherProcessor.Database.Entities.Enums
 {
     /// <summary>
@@ -133,6 +135,7 @@ namespace WeatherProcessor.Database.Entities.Enums
                 WeatherType.HeavySnowWithBreaks => "Сильный снег с перерывами",
                 WeatherType.HeavyRainDrizzleWithShow => "Сильный дождь/морось со снегом",
                 WeatherType.None => "",
+                _ => throw new InvalidEnumArgumentException(weatherType.ToString()),
             };
 
             return result;
